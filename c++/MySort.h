@@ -7,6 +7,7 @@ public:
 	~MySort();
 
 	void BubbleSort();
+	void InsertSort();
 	int getCount();
 	int* initAry(int n);
 	void uninitAry();
