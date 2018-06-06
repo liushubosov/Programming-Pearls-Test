@@ -8,6 +8,9 @@ public:
 
 	void BubbleSort();
 	void InsertSort();
+	void SelectSort();
+	void QuickSort(int low, int high);
+
 	int getCount();
 	int* initAry(int n);
 	void uninitAry();

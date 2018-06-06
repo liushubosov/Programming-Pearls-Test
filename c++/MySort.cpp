@@ -6,12 +6,32 @@ MySort::MySort()
 {
 	m_nTop = -1;
 	m_nCount = 10;
-	m_pData = new int[m_nCount];
 }
 
 MySort::~MySort()
 {
 	uninitAry();
+}
+
+int MySort::getCount()
+{
+	return m_nCount;
+}
+
+int* MySort::initAry(int n)
+{
+	m_nCount = n;
+	m_pData = new int[n];
+	return m_pData;
+}
+
+void MySort::uninitAry()
+{
+	if (m_pData != NULL)
+	{
+		delete m_pData;
+		m_pData = NULL;
+	}
 }
 
 //冒泡排序
@@ -58,28 +78,54 @@ void MySort::InsertSort()
 	}
 }
 
-int MySort::getCount()
+//选择排序
+void MySort::SelectSort()
 {
-	return m_nCount;
-}
-
-int* MySort::initAry(int n)
-{
-	assert(m_pData != NULL);
-	m_nCount = n;
-	m_pData = new int[n];
+	int n = getCount();
 	for (int i = 0; i < n; i++)
 	{
-		m_pData[i] = -100000000;
+		int min = m_pData[i];
+		int minIndex = 0;
+		for (int j = i + 1; j < n; j++)
+		{
+			if (min > m_pData[j])
+			{
+				min = m_pData[j];
+				minIndex = j;
+			}				
+		}
+		if (minIndex > 0)
+		{
+			m_pData[minIndex] = m_pData[i];
+			m_pData[i] = min;
+		}
 	}
-	return m_pData;
 }
 
-void MySort::uninitAry()
+//快速排序
+void MySort::QuickSort(int low,int high)
 {
-	if (m_pData != NULL)
+	int l = low;
+	int r = high;
+	int key = m_pData[r];
+	if (l >= r)
+		return;
+
+	while (l < r)
 	{
-		delete m_pData;
-		m_pData = NULL;
+		while (l < r && m_pData[l] <= key) //1.m_pData[l] == key，也要自增，不然有可能无限循环
+			l++;
+		m_pData[r] = m_pData[l];
+
+		while (l < r && m_pData[r] >= key)//2.同1
+			r--;
+		m_pData[l] = m_pData[r];
 	}
+	m_pData[r] = key;
+
+	int medium = (r - l) / 2;
+	QuickSort(l, medium - 1);
+	QuickSort(medium + 1, r);
 }
+
+
