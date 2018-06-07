@@ -128,4 +128,73 @@ void MySort::QuickSort(int low,int high)
 	QuickSort(medium + 1, r);
 }
 
+//合并两个已排序的数组
+void MySort::Merge(int * ary, int l, int m, int r)
+{
+	int nL = m - l + 1;
+	int nR = r - m;
+
+	int * aryL= new int[nL+1];
+	int * aryR = new int[nR+1];
+	for (int i = 0; i < nL; i++)
+	{
+		aryL[i] = ary[l + i];
+	}
+
+	for (int j = 0; j < nR; j++)
+	{
+		aryR[j] = ary[m + j];
+	}
+
+	aryL[nL + 1] = 0XFFFE;
+	aryR[nR + 1] = 0XFFFE;
+
+	int i = 0, j = 0;
+	for (int k = 0; k < r; k++)
+	{
+
+		if (i == nL && j < nR)
+		{
+			for (; j < nR; j++)
+			{
+				ary[k] = aryR[j];
+			}
+			break;
+		}
+		else if (j == nR && i < nL)
+		{
+			for (; i < nR; i++)
+			{
+				ary[k] = aryL[i];
+			}
+			break;
+		}
+
+		if (aryL[i] <= aryR[j])
+		{
+				ary[k] = aryL[i];
+				i++;
+		}
+		else
+		{
+				ary[k] = aryR[j];
+				j++;
+		}
+		
+	}
+}
+
+void MySort::MergeSort(int l, int r)
+{
+	if (l < r)
+	{
+		int m = (l + r) / 2;
+		MergeSort(l,m);
+		MergeSort(m + 1, r);
+		Merge(m_pData,l,m,r);
+	}
+
+}
+
+
 
