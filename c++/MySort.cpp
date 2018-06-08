@@ -138,7 +138,7 @@ void MySort::Merge(int * ary, int l, int m, int r)
 	int * aryR = new int[nR+1];
 	for (int i = 0; i < nL; i++)
 	{
-		aryL[i] = ary[l + i];
+		aryL[i] = ary[l + i-1];
 	}
 
 	for (int j = 0; j < nR; j++)
@@ -150,26 +150,8 @@ void MySort::Merge(int * ary, int l, int m, int r)
 	aryR[nR + 1] = 0XFFFE;
 
 	int i = 0, j = 0;
-	for (int k = 0; k < r; k++)
+	for (int k = l; k < r+1; k++)
 	{
-
-		if (i == nL && j < nR)
-		{
-			for (; j < nR; j++)
-			{
-				ary[k] = aryR[j];
-			}
-			break;
-		}
-		else if (j == nR && i < nL)
-		{
-			for (; i < nR; i++)
-			{
-				ary[k] = aryL[i];
-			}
-			break;
-		}
-
 		if (aryL[i] <= aryR[j])
 		{
 				ary[k] = aryL[i];
@@ -179,8 +161,7 @@ void MySort::Merge(int * ary, int l, int m, int r)
 		{
 				ary[k] = aryR[j];
 				j++;
-		}
-		
+		}		
 	}
 }
 
